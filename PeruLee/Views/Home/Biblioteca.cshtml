@@ -1,7 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Biblioteca</h1>
-<p>Esta es la biblioteca</p>
+﻿@model List<CEntidad.Libro>
+
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4 text-light">Biblioteca</h1>
+    <p class="text-center text-light">Explora nuestra colección de libros</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var libro in Model)
+        {
+            <div class="col">
+                <div class="card shadow-lg border-0 h-100"
+                     style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
+                    <img src="@libro.Caratula" class="card-img-top" alt="Carátula de @libro.Titulo"
+                         style="height: 250px; object-fit: cover; border-radius: 15px 15px 0 0;">
+                    <div class="card-body">
+                        <h5 class="card-title">@libro.Titulo</h5>
+                        <p class="card-text">Autor: @(libro.Autor != null ? libro.Autor.Nombre : "Desconocido")</p>
+                        <p class="card-text">Publicado: @(libro.FechaPublicacion?.ToString("yyyy") ?? "Fecha desconocida")</p>
+                        <p class="card-text">Copias disponibles: @libro.CopiasDisponibles</p>
+                        <span class="badge @(libro.Estado == "Disponible" ? "bg-success" : "bg-danger")">
+                            @libro.Estado
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+    }
+</style>

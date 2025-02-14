@@ -7,17 +7,17 @@ namespace CDatos.Implementaciones
 {
     public class AutorDaoImpl : IDao<Autor>
     {
-        private readonly Conexion conexion;
+        //private readonly Conexion conexion;
 
-        public AutorDaoImpl(Conexion conexion)
-        {
-            conexion = conexion;
-        }
+        //public AutorDaoImpl(Conexion conexion)
+        //{
+        //    conexion = conexion;
+        //}
 
         public Autor Obtener(int id)
         {
             Autor autor = null;
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_autor WHERE id_autor = @Id";
@@ -44,7 +44,7 @@ namespace CDatos.Implementaciones
         public List<Autor> Listar()
         {
             List<Autor> autores = new List<Autor>();
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_autor";
@@ -67,7 +67,7 @@ namespace CDatos.Implementaciones
 
         public void Crear(Autor entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "INSERT INTO tbl_autor (nombre, apellido) VALUES (@Nombre, @Apellido)";
@@ -82,7 +82,7 @@ namespace CDatos.Implementaciones
 
         public void Actualizar(Autor entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "UPDATE tbl_autor SET nombre = @Nombre, apellido = @Apellido WHERE id_autor = @Id";
@@ -98,7 +98,7 @@ namespace CDatos.Implementaciones
 
         public void Eliminar(int id)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "DELETE FROM tbl_autor WHERE id_autor = @Id";

@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+@* <div class="text-center">
     <h1 class="display-4">Bienvenido</h1>
 
     @if (User.Identity.IsAuthenticated)
@@ -19,4 +19,182 @@
     {
         <p>No has iniciado sesión. <a asp-controller="Acceso" asp-action="Index">Inicia sesión aquí</a>.</p>
     }
+</div> *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<style>
+    body {
+        background: linear-gradient(135deg, #1e1e2f, #2c2c44);
+        color: white;
+    }
+
+    .hero-section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background: url('/ruta/a/una-imagen-de-libros.jpg') no-repeat center center/cover;
+        position: relative;
+    }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+
+    .btn-explorar {
+        background: #ff9800;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+        .btn-explorar:hover {
+            background: #ffb74d;
+            transform: scale(1.05);
+        }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .card-custom {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.2);
+        }
+
+    .contact-section {
+        background: #222;
+        padding: 60px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .contact-details p {
+        font-size: 1.1rem;
+        margin: 10px 0;
+    }
+
+    .iframe-container {
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .img-fixed {
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="hero-content" data-aos="fade-up">
+        <h1>Bienvenido a <span style="color: #ff9800;">PeruLee</span></h1>
+        <p>Descubre un mundo de conocimiento con nuestra colección de libros.</p>
+        <a href="/Home/Biblioteca" class="btn btn-explorar">Explorar Biblioteca</a>
+    </div>
 </div>
+
+<div class="container">
+    <section class="section text-center">
+        <h2 class="fw-bold" data-aos="fade-up">¿Por qué Leer es Beneficioso?</h2>
+        <p data-aos="fade-up" data-aos-delay="100">Descubre las razones por las que la lectura puede mejorar tu vida.</p>
+        <div class="row mt-4">
+            <div class="col-md-4" data-aos="flip-left">
+                <div class="card card-custom">
+                    <img src="https://media.istockphoto.com/id/1367033004/es/vector/cerebro-dibujado-a-mano-2.jpg?s=612x612&w=0&k=20&c=XSYTjxzr8RMod2Xga4FoTSQ4-KqxW6qxyFoJf0KGZpk=" class="card-img-top img-fixed" alt="Beneficio 1">
+                    <div class="card-body">
+                        <h5 class="card-title">📖 Mejora tu Mente</h5>
+                        <p class="card-text">La lectura fortalece la memoria, mejora la concentración y estimula la creatividad.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                <div class="card card-custom">
+                    <img src="https://img.freepik.com/vector-premium/mujer-meditando-naturaleza-hojas-ilustracion-concepto-yoga-meditacion-relajacion-recreacion-estilo-vida-saludable-ilustracion-vector-estilo-dibujos-animados-plana_171965-2623.jpg" class="card-img-top img-fixed" alt="Beneficio 2">
+                    <div class="card-body">
+                        <h5 class="card-title">🧘 Reduce el Estrés</h5>
+                        <p class="card-text">Sumergirse en un buen libro puede ser una excelente forma de relajarse y escapar de la rutina.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="300">
+                <div class="card card-custom">
+                    <img src="https://img.freepik.com/vector-gratis/libro-ilustracion-icono-vector-dibujos-animados-bombilla-objeto-educacion-icono-concepto-aislado-premium-vector-estilo-dibujos-animados-plana_138676-4009.jpg" class="card-img-top img-fixed" alt="Beneficio 3">
+                    <div class="card-body">
+                        <h5 class="card-title">🎓 Expande tu Conocimiento</h5>
+                        <p class="card-text">Cada libro es una nueva fuente de aprendizaje que te ayuda a comprender el mundo mejor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact-section">
+        <h2 class="fw-bold" data-aos="fade-up">Contacto</h2>
+        <div class="contact-details" data-aos="fade-up" data-aos-delay="100">
+            <p><strong>📍 Dirección:</strong> Av. Principal 123, Lima, Perú</p>
+            <p><strong>📞 Teléfono:</strong> +51 987 654 321</p>
+            <p><strong>📧 Correo:</strong> contacto@perulee.com</p>
+        </div>
+
+        <div class="iframe-container" data-aos="fade-up" data-aos-delay="200">
+            <iframe width="100%" height="350" frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.6770165584446!2d-77.02824048449412!3d-12.085552746624311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c88f4e8a3ebd%3A0xf3bb1a7e54e94b6d!2sLima%2C%20Per%C3%BA!5e0!3m2!1ses!2sus!4v1633727329012!5m2!1ses!2sus"
+                    allowfullscreen>
+            </iframe>
+        </div>
+    </section>
+
+    <section class="section text-center">
+        <h2 class="fw-bold" data-aos="fade-up">Creadores de PeruLee</h2>
+        <div class="row mt-4">
+            <div class="col-md-6" data-aos="fade-right">
+                <p><strong>📌 Brando</strong> - Bakend</p>
+            </div>
+            <div class="col-md-6" data-aos="fade-right">
+                <p><strong>📌 Hector Julio</strong> - Bakend</p>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+                <p><strong>💻 Gabriela</strong> - Desarrolladora Backend</p>
+            </div>
+            <div class="col-md-6" data-aos="fade-right">
+                <p><strong>📌 Eduardo</strong> - Frotend</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init();
+</script>

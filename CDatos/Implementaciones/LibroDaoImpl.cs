@@ -9,17 +9,17 @@ namespace CDatos.Implementaciones
     public class LibroDaoImpl : IDao<Libro>
     {
 
-        private readonly Conexion conexion;
+        //private readonly Conexion conexion;
 
-        public LibroDaoImpl(Conexion conexion)
-        {
-            conexion = conexion;
-        }
+        //public LibroDaoImpl(Conexion conexion)
+        //{
+        //    conexion = conexion;
+        //}
 
         public Libro Obtener(int id)
         {
             Libro libro = null;
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_libro WHERE id_libro = @Id";
@@ -51,7 +51,7 @@ namespace CDatos.Implementaciones
         public List<Libro> Listar()
         {
             List<Libro> libros = new List<Libro>();
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_libro";
@@ -79,7 +79,7 @@ namespace CDatos.Implementaciones
 
         public void Crear(Libro entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "INSERT INTO tbl_libro (titulo, caratula, fecha_publicacion, id_categoria_fk, id_autor_fk, copias_disponibles, estado) " +
@@ -100,7 +100,7 @@ namespace CDatos.Implementaciones
 
         public void Actualizar(Libro entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "UPDATE tbl_libro SET titulo = @Titulo, caratula = @Caratula, fecha_publicacion = @FechaPublicacion, " +
@@ -123,7 +123,7 @@ namespace CDatos.Implementaciones
 
         public void Eliminar(int id)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "DELETE FROM tbl_libro WHERE id_libro = @Id";

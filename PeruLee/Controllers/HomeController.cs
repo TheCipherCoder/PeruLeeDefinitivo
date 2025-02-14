@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CDatos.Implementaciones;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PeruLee.Models;
@@ -7,10 +8,12 @@ namespace PeruLee.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly LibroDaoImpl _libroDao;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(LibroDaoImpl libroDao, ILogger<HomeController> logger)
         {
+            _libroDao = libroDao;
             _logger = logger;
         }
         [HttpGet]
@@ -21,7 +24,8 @@ namespace PeruLee.Controllers
         [HttpGet]
         public IActionResult Biblioteca()
         {
-            return View();
+            var listaLibros = _libroDao.Listar();
+            return View(listaLibros);
         }
         [HttpGet]
         public IActionResult Mision()

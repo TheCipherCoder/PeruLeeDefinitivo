@@ -9,13 +9,12 @@ namespace CDatos.Implementaciones
 {
     public class UsuarioDaoImpl : IDao<Usuario>
     {
-        private readonly Conexion _conexion;
+        //private readonly Conexion _conexion;
 
-        public UsuarioDaoImpl(Conexion conexion)
-        {
-            _conexion = conexion;
-        }
-        // Consultas SQL
+        //public UsuarioDaoImpl(Conexion conexion)
+        //{
+        //    _conexion = conexion;
+        //}
         private const string INSERT = "INSERT INTO tbl_usuario (nombre, apellido, email, contrasena, telefono, imagen, rol) VALUES (@Nombre, @Apellido, @Email, @Contrasena, @Telefono, @Imagen, @Rol)";
         private const string UPDATE = "UPDATE tbl_usuario SET nombre = @Nombre, apellido = @Apellido, email = @Email, contrasena = @Contrasena, telefono = @Telefono, imagen = @Imagen, rol = @Rol WHERE id_usuario = @IdUsuario";
         private const string DELETE = "DELETE FROM tbl_usuario WHERE id_usuario = @IdUsuario";
@@ -25,7 +24,7 @@ namespace CDatos.Implementaciones
 
         public void Crear(Usuario entity)
         {
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(INSERT, con))
@@ -45,7 +44,7 @@ namespace CDatos.Implementaciones
 
         public void Actualizar(Usuario entity)
         {
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(UPDATE, con))
@@ -66,7 +65,7 @@ namespace CDatos.Implementaciones
 
         public void Eliminar(int id)
         {
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(DELETE, con))
@@ -80,7 +79,7 @@ namespace CDatos.Implementaciones
         public List<Usuario> Listar()
         {
             List<Usuario> usuarios = new List<Usuario>();
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(SELECT_ALL, con))
@@ -111,7 +110,7 @@ namespace CDatos.Implementaciones
         public Usuario Obtener(int id)
         {
             Usuario usuario = null;
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(SELECT_BY_ID, con))
@@ -143,7 +142,7 @@ namespace CDatos.Implementaciones
         public Usuario ObtenerPorCredenciales(string email, string contrasena)
         {
             Usuario usuario = null;
-            using (SqlConnection con = _conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 using (SqlCommand cmd = new SqlCommand(SELECT_BY_CREDENTIALS, con))

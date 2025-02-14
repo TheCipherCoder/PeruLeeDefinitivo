@@ -13,7 +13,6 @@ namespace CEntidad
         public int CopiasDisponibles { get; set; }
         public string Estado { get; set; }
 
-        // Propiedades de navegación (relaciones)
         public Categoria Categoria { get; set; }
         public Autor Autor { get; set; }
     }

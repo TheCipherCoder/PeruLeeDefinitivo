@@ -8,16 +8,16 @@ namespace CDatos.Implementaciones
     public class CategoriaDaoImpl : IDao<Categoria>
     {
 
-        private readonly Conexion conexion;
+        //private readonly Conexion conexion;
 
-        public CategoriaDaoImpl(Conexion conexion)
-        {
-            conexion = conexion;
-        }
+        //public CategoriaDaoImpl(Conexion conexion)
+        //{
+        //    conexion = conexion;
+        //}
         public Categoria Obtener(int id)
         {
             Categoria categoria = null;
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_categoria WHERE id_categoria = @Id";
@@ -43,7 +43,7 @@ namespace CDatos.Implementaciones
         public List<Categoria> Listar()
         {
             List<Categoria> categorias = new List<Categoria>();
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "SELECT * FROM tbl_categoria";
@@ -65,7 +65,7 @@ namespace CDatos.Implementaciones
 
         public void Crear(Categoria entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "INSERT INTO tbl_categoria (nombre) VALUES (@Nombre)";
@@ -79,7 +79,7 @@ namespace CDatos.Implementaciones
 
         public void Actualizar(Categoria entity)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "UPDATE tbl_categoria SET nombre = @Nombre WHERE id_categoria = @Id";
@@ -94,7 +94,7 @@ namespace CDatos.Implementaciones
 
         public void Eliminar(int id)
         {
-            using (SqlConnection con = conexion.GetConnection())
+            using (SqlConnection con = new SqlConnection(Conexion.Cn))
             {
                 con.Open();
                 string query = "DELETE FROM tbl_categoria WHERE id_categoria = @Id";

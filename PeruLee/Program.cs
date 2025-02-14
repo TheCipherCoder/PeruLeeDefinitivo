@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<Conexion>();
 builder.Services.AddTransient<UsuarioDaoImpl>();
+builder.Services.AddTransient<LibroDaoImpl>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
