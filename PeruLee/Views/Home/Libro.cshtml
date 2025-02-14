@@ -1,8 +1,90 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<CPresentacion.Models.LibroVM>
+
 @{
+    ViewData["Title"] = "Libro";
 }
 
-
 <h1>Libro</h1>
+
+<div class="row align-items-end">
+    <div class="col-md-8">
+<form method="get" asp-controller="Home" asp-action="Libro" class="mt-4">
+    <div class="row align-items-end">
+        <div class="col-md-4 flex-row">
+            <label for="idLibro" class="form-label">ID Libro</label>
+            <input type="number" class="form-control" id="idLibro" name="idLibro" required>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </div>
+</form>
+    </div>
+
+    <div class="col-md-4 mt-4 mt-md-0">
+        <a asp-action="CrearLibro" class="btn btn-success w-100">Crear Libro</a>
+    </div>
+
+</div>
+
+<table class="table table-responsive mt-4 text-light">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdLibro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Autor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdLibro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Autor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                    @Html.ActionLink("Editar", "EditarLibro", null, new { id = item.IdLibro }, new { @class = "btn btn-primary" }) |
+                    @Html.ActionLink("Eliminar", "EliminarLibro", null, new { id = item.IdLibro }, new { @class = "btn btn-primary" })
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+    
+<style>
+    .table thead th {
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+</style>
