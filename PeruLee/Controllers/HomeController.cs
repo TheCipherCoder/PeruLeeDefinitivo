@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using PeruLee.Models;
+using CEntidad;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PeruLee.Controllers
 {
@@ -163,7 +165,6 @@ namespace PeruLee.Controllers
             ViewBag.Solicitudes = solicitudes;
             return View();
         }
-
         [HttpPost]
         public IActionResult Solicitar([FromBody] SolicitudRequest request)
         {
@@ -203,10 +204,97 @@ namespace PeruLee.Controllers
 
         [HttpGet]
         [Authorize(Roles = "1")]
-        public IActionResult Libro()
+        public IActionResult Libro(int idLibro = 0)
         {
-            return View();
+            AutorDaoImpl autorDao = new AutorDaoImpl();
+            CategoriaDaoImpl categoriaDao = new CategoriaDaoImpl();
+
+            List<LibroVM> lista = new List<LibroVM>();
+
+            List<Libro> libros = new List<Libro>();
+
+            if (idLibro == 0)
+            {
+               libros = _libroDao.Listar();
+            }
+            else { 
+                libros.Add(_libroDao.Obtener(idLibro));
+            }
+
+                foreach (Libro libro in libros)
+                {
+
+                    if (libro == null) continue;
+
+                    Autor autor = autorDao.Obtener(libro.IdAutorFk);
+                    string autorNombre = autor.Nombre;
+
+                    Categoria categoria = categoriaDao.Obtener(libro.IdCategoriaFk);
+                    string categoriaNombre = categoria.Nombre;
+
+                    lista.Add(new LibroVM
+                    {
+                        IdLibro = libro.IdLibro,
+                        Titulo = libro.Titulo,
+                        Autor = autorNombre,
+                        Descripcion = "Un buen libro",
+                        Categoria = categoriaNombre,
+                        Stock = libro.CopiasDisponibles
+
+                    });
+                }
+            return View(lista);
         }
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult EliminarLibro(int id) { 
+
+            _libroDao.Eliminar(id);
+        
+            return RedirectToAction("Libro");
+        }
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult EditarLibro(int id)
+        {
+            Libro libro = new Libro();
+
+            libro = _libroDao.Obtener(id);
+
+            return View(libro);
+        }
+        [HttpPost]
+        [Authorize(Roles = "1")]
+        public IActionResult EditarLibro(Libro libro)
+        {
+           _libroDao.Actualizar(libro);
+
+            return RedirectToAction("Libro");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult CrearLibro()
+        {
+            Libro libro = new Libro();
+
+            List<Libro> libros = _libroDao.Listar();
+
+            int codigoNuevo = libros.Last().IdLibro + 1;
+
+            libro.IdLibro = codigoNuevo;
+
+            return View(libro);
+        }
+        [HttpPost]
+        [Authorize(Roles = "1")]
+        public IActionResult CrearLibro(Libro libro)
+        {
+            _libroDao.Crear(libro);
+
+            return View(libro);
+        }
+
         [HttpGet]
         [Authorize(Roles = "1")]
         public IActionResult Categoria()
