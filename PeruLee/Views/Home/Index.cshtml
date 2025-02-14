@@ -3,6 +3,20 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h2>Información del Usuario</h2>
+        <ul class="list-group">
+            @foreach (var claim in User.Claims)
+            {
+                <li class="list-group-item"><strong>@claim.Type:</strong> @claim.Value</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No has iniciado sesión. <a asp-controller="Acceso" asp-action="Index">Inicia sesión aquí</a>.</p>
+    }
 </div>

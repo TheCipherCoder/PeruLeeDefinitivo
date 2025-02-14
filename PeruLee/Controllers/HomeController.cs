@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PeruLee.Models;
 
@@ -12,28 +13,62 @@ namespace PeruLee.Controllers
         {
             _logger = logger;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Biblioteca()
         {
             return View();
         }
-
+        [HttpGet]
         public IActionResult Mision()
         {
             return View();
         }
-
+        [HttpGet]
+        [Authorize(Roles = "2")]
         public IActionResult Prestamo()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        [Authorize(Roles = "2")]
+        public IActionResult Solicitar()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult Libro()
+        {
+            return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult Categoria()
+        {
+            return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult Autor()
+        {
+            return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "1")]
+        public IActionResult Usuario()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AccesoDenegado()
         {
             return View();
         }

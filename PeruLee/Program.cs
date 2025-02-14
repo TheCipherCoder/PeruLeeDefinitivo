@@ -3,11 +3,10 @@ using CDatos;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
-// Registrar Conexion como servicio singleton
-builder.Services.AddSingleton<Conexion>();
 
-// Registrar UsuarioDaoImpl como servicio transitorio
+builder.Services.AddSingleton<Conexion>();
 builder.Services.AddTransient<UsuarioDaoImpl>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -16,7 +15,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Acceso/Index";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        options.LogoutPath = "/Home/Privacy";
+        options.AccessDeniedPath = "/Home/AccesoDenegado";
     });
 
 var app = builder.Build();
@@ -39,6 +38,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Acceso}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -15,8 +15,14 @@ namespace PeruLee.Controllers
         {
             _usuarioDao = u;
         }
+
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -25,7 +31,7 @@ namespace PeruLee.Controllers
         {
             var usuario = _usuarioDao.ObtenerPorCredenciales(usuariovm.Email, usuariovm.Contrasena);
 
-            if (usuario != null) 
+            if (usuario != null)
             {
                 var claims = new List<Claim>
                 {
@@ -48,5 +54,6 @@ namespace PeruLee.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Acceso");
         }
+
     }
 }
