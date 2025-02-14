@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Solicitudes de Libros";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">📜 Solicitudes de Libros</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Libro</th>
+                        <th>Autor</th>
+                        <th>Categoría</th>
+                        <th>Fecha Solicitud</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var solicitud in ViewBag.Solicitudes)
+                    {
+                        <tr class="@GetEstadoClass(solicitud.EstadoSolicitud)">
+                            <td>@solicitud.IdSolicitud</td>
+                            <td>@solicitud.NombreUsuario</td>
+                            <td>@solicitud.Email</td>
+                            <td>@solicitud.TituloLibro</td>
+                            <td>@solicitud.Autor</td>
+                            <td>@solicitud.Categoria</td>
+                            <td>@solicitud.FechaSolicitud.ToString("dd/MM/yyyy")</td>
+                            <td><span class="badge bg-info">@solicitud.EstadoSolicitud</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetEstadoClass(string estado)
+    {
+        return estado switch
+        {
+            "Pendiente" => "table-warning",
+            "Expirada" => "table-danger",
+            "Cancelada" => "table-secondary",
+            "Procesada" => "table-success",
+            _ => ""
+        };
+    }
+}

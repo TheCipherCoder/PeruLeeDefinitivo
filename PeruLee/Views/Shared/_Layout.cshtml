@@ -66,9 +66,26 @@
 
                     @if (User.IsInRole("2"))
                     {
-                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Prestamo">Préstamo</a></li>
-                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Solicitar">Solicitar</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="prestamosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Préstamos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="prestamosDropdown">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Prestamo">Prestarme un libro</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ListarPrestamos">Ver total de préstamos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="solicitudesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Solicitudes
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="solicitudesDropdown">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ListarSolicitudes">Ver solicitudes</a></li>
+                            </ul>
+                        </li>
                     }
+
                     @if (User.IsInRole("1"))
                     {
                         <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Libro">Libros</a></li>
