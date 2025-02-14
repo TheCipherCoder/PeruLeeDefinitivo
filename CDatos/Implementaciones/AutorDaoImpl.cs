@@ -14,7 +14,7 @@ namespace CDatos.Implementaciones
         //    conexion = conexion;
         //}
 
-        public Autor Obtener(int id)
+        public Autor Obtener(int? id)
         {
             Autor autor = null;
             using (SqlConnection con = new SqlConnection(Conexion.Cn))

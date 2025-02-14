@@ -16,7 +16,7 @@ namespace CDatos.Implementaciones
         //    conexion = conexion;
         //}
 
-        public Libro Obtener(int id)
+        public Libro Obtener(int? id)
         {
             Libro libro = null;
             using (SqlConnection con = new SqlConnection(Conexion.Cn))

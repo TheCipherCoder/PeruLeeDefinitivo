@@ -14,7 +14,7 @@ namespace CDatos.Implementaciones
         //{
         //    conexion = conexion;
         //}
-        public Categoria Obtener(int id)
+        public Categoria Obtener(int? id)
         {
             Categoria categoria = null;
             using (SqlConnection con = new SqlConnection(Conexion.Cn))

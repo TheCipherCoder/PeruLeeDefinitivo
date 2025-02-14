@@ -107,7 +107,7 @@ namespace CDatos.Implementaciones
             return usuarios;
         }
 
-        public Usuario Obtener(int id)
+        public Usuario Obtener(int? id)
         {
             Usuario usuario = null;
             using (SqlConnection con = new SqlConnection(Conexion.Cn))
