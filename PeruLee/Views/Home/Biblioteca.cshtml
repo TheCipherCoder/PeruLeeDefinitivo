@@ -1,4 +1,4 @@
-﻿@model List<CEntidad.Libro>
+﻿@* @model List<CEntidad.Libro>
 
 <div class="container py-5">
     <h1 class="text-center fw-bold mb-4 text-light">Biblioteca</h1>
@@ -33,3 +33,79 @@
         box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
     }
 </style>
+ *@
+@model List<CEntidad.Libro>
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    var usuarioId = User.FindFirstValue("IdUsuario") ?? "0";
+}
+
+<div class="container py-5">
+    <h1 class="text-center fw-bold mb-4 text-light">Biblioteca</h1>
+    <p class="text-center text-light">Explora nuestra colección de libros</p>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var libro in Model)
+        {
+            <div class="col">
+                <div class="card shadow-lg border-0 h-100"
+                     style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; border-radius: 15px; overflow: hidden; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
+                    <img src="@libro.Caratula" class="card-img-top" alt="Carátula de @libro.Titulo"
+                         style="height: 250px; object-fit: cover; border-radius: 15px 15px 0 0;">
+                    <div class="card-body">
+                        <h5 class="card-title">@libro.Titulo</h5>
+                        <p class="card-text">Autor: @(libro.Autor != null ? libro.Autor.Nombre : "Desconocido")</p>
+                        <p class="card-text">Publicado: @(libro.FechaPublicacion?.ToString("yyyy") ?? "Fecha desconocida")</p>
+                        <p class="card-text">Copias disponibles: @libro.CopiasDisponibles</p>
+                        <span class="badge @(libro.Estado == "Disponible" ? "bg-success" : "bg-danger")">
+                            @libro.Estado
+                        </span>
+
+                        <button class="btn btn-primary mt-3 w-100 solicitar-btn"
+                                data-libro-id="@libro.IdLibro">
+                            Solicitar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let usuarioId = @usuarioId; // Obtener el usuario desde las claims en el backend
+
+        $(".solicitar-btn").click(function () {
+            let libroId = $(this).data("libro-id");
+
+            if (usuarioId <= 0) {
+                alert("Debes iniciar sesión para solicitar un libro.");
+                return;
+            }
+
+            $.ajax({
+                url: "/Home/Solicitar",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ IdUsuario: usuarioId, IdLibro: libroId }),
+                success: function (response) {
+                    alert(response.mensaje); // Muestra la respuesta del servidor
+                },
+                error: function (xhr) {
+                    alert("Error al solicitar el libro: " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

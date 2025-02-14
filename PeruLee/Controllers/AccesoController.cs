@@ -35,6 +35,7 @@ namespace PeruLee.Controllers
             {
                 var claims = new List<Claim>
                 {
+                    new Claim("IdUsuario", usuario.IdUsuario.ToString()),
                     new Claim(ClaimTypes.Name, usuario.Nombre),
                     new Claim(ClaimTypes.Email, usuario.Email),
                     new Claim(ClaimTypes.Role, usuario.Rol.ToString())

@@ -6,6 +6,7 @@ using CPresentacion.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using PeruLee.Models;
 
 namespace PeruLee.Controllers
@@ -53,13 +54,9 @@ namespace PeruLee.Controllers
                 using (SqlCommand cmd = new SqlCommand("sp_prestar_libro", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Parámetros
                     cmd.Parameters.AddWithValue("@id_usuario", idUsuario);
                     cmd.Parameters.AddWithValue("@id_libro", idLibro);
                     cmd.Parameters.AddWithValue("@fecha_devolucion", fechaDevolucion);
-
-                    // Parámetro de salida
                     SqlParameter outputParam = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200)
                     {
                         Direction = ParameterDirection.Output
@@ -166,7 +163,42 @@ namespace PeruLee.Controllers
             ViewBag.Solicitudes = solicitudes;
             return View();
         }
+        [HttpPost]
+        public IActionResult Solicitar([FromBody] SolicitudRequest request)
+        {
+            if (request == null || request.IdUsuario <= 0 || request.IdLibro <= 0)
+            {
+                return Json(new { exito = false, mensaje = "Datos inválidos." });
+            }
 
+            string mensaje = "";
+            using (SqlConnection conexion = new SqlConnection(Conexion.Cn))
+            {
+                using (SqlCommand comando = new SqlCommand("sp_solicitar", conexion))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@id_usuario", request.IdUsuario);
+                    comando.Parameters.AddWithValue("@id_libro", request.IdLibro);
+                    SqlParameter mensajeParam = new SqlParameter("@mensaje", SqlDbType.NVarChar, 200)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    comando.Parameters.Add(mensajeParam);
+
+                    try
+                    {
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                        mensaje = mensajeParam.Value.ToString();
+                        return Json(new { exito = true, mensaje });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Json(new { exito = false, mensaje = "Error: " + ex.Message });
+                    }
+                }
+            }
+        }
 
         [HttpGet]
         [Authorize(Roles = "1")]
