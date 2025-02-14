@@ -62,11 +62,14 @@
                         <span class="badge @(libro.Estado == "Disponible" ? "bg-success" : "bg-danger")">
                             @libro.Estado
                         </span>
-
-                        <button class="btn btn-primary mt-3 w-100 solicitar-btn"
-                                data-libro-id="@libro.IdLibro">
-                            Solicitar
-                        </button>
+                        @if (User.IsInRole("3"))
+                        {
+                            <button class="btn btn-primary mt-3 w-100 solicitar-btn"
+                                    data-libro-id="@libro.IdLibro">
+                                Solicitar
+                            </button>
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -84,7 +87,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        let usuarioId = @usuarioId; // Obtener el usuario desde las claims en el backend
+        let usuarioId = @usuarioId;
 
         $(".solicitar-btn").click(function () {
             let libroId = $(this).data("libro-id");
@@ -100,7 +103,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({ IdUsuario: usuarioId, IdLibro: libroId }),
                 success: function (response) {
-                    alert(response.mensaje); // Muestra la respuesta del servidor
+                    alert(response.mensaje);
                 },
                 error: function (xhr) {
                     alert("Error al solicitar el libro: " + xhr.responseText);

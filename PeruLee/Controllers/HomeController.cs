@@ -163,6 +163,7 @@ namespace PeruLee.Controllers
             ViewBag.Solicitudes = solicitudes;
             return View();
         }
+
         [HttpPost]
         public IActionResult Solicitar([FromBody] SolicitudRequest request)
         {
