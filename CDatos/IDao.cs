@@ -8,7 +8,7 @@ namespace CDatos
 {
     public interface IDao<T>
     {
-        T Obtener(int id);
+        T Obtener(int? id);
         List<T> Listar();
         void Crear(T entity);
         void Actualizar(T entity);
