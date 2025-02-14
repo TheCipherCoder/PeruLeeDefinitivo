@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,95 +7,117 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PeruLee.styles.css" asp-append-version="true" />
+    <style>
+        .navbar {
+            position: relative;
+            z-index: 1000;
+        }
+
+            .navbar .dropdown-menu {
+                position: absolute;
+                z-index: 1001;
+            }
+
+        .container.my-5 {
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+
+            .navbar-nav .nav-item .nav-link::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -3px;
+                width: 0;
+                height: 2px;
+                background-color: white;
+                transition: all 0.3s ease-in-out;
+                transform: translateX(-50%);
+            }
+
+            .navbar-nav .nav-item .nav-link:hover::after {
+                width: 100%;
+            }
+
+        .navbar-nav .nav-item .dropdown-toggle::after {
+            display: none;
+        }
+
+    </style>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PeruLee</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Biblioteca">Biblioteca</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Mision">Mision</a>
-                        </li>
-                        @if(User.IsInRole("2"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Prestamo">Prestamo</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Solicitar">Solicitar</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("1")) 
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Libro">Libro</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Categoria">Categoria</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Autor">Autor</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Usuario">Usuario</a>
-                            </li>
+<body style="background: linear-gradient(to right, #141E30, #243B55); color: white;">
 
-                        }
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent shadow-sm p-3" style="backdrop-filter: blur(10px);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">📚 PeruLee</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Biblioteca">Biblioteca</a></li>
+                    <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Mision">Misión</a></li>
 
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/path/to/user-image.jpg" alt="User Image" style="width: 30px; height: 30px; border-radius: 50%;" />
-                                    @User.Identity.Name
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @if (User.IsInRole("1"))
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Vista Admin</a></li>
-                                    }
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Acceso" asp-action="Salir">Salir</a></li>
-                                </ul>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Index">Iniciar sesión</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                    @if (User.IsInRole("2"))
+                    {
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Prestamo">Préstamo</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Solicitar">Solicitar</a></li>
+                    }
+                    @if (User.IsInRole("1"))
+                    {
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Libro">Libros</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Categoria">Categorías</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Autor">Autores</a></li>
+                        <li class="nav-item"><a class="nav-link text-light" asp-controller="Home" asp-action="Usuario">Usuarios</a></li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <img src="~/path/to/user-image.jpg" class="rounded-circle me-2" width="30" height="30" />
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (User.IsInRole("1"))
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="Index">Vista Admin</a></li>
+                                }
+                                <li><a class="dropdown-item" asp-controller="Acceso" asp-action="Salir">Cerrar Sesión</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light px-4" asp-controller="Acceso" asp-action="Index">Iniciar Sesión</a>
+                        </li>
+                    }
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container my-5 p-4 rounded-4 shadow-lg" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PeruLee - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="text-center text-light py-3 mt-5 bg-transparent" style="backdrop-filter: blur(10px);">
+        <p class="mb-0">&copy; 2025 - PeruLee | <a asp-controller="Home" asp-action="Privacy" class="text-white-50">Política de privacidad</a></p>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
